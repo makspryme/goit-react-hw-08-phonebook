@@ -7,11 +7,8 @@ const contactsReducer = createSlice({
   initialState: [],
   extraReducers: builder => {
     builder
-      .addCase(addContacts.fulfilled, (state, { payload }) => {
-        // return [...state, payload];
-      })
+      .addCase(addContacts.fulfilled, (state, { payload }) => {})
       .addCase(getContacts.fulfilled, (state, { payload }) => {
-        console.log('refresh');
         return payload;
       });
   },

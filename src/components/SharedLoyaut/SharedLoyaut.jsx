@@ -40,9 +40,9 @@ export default function SharedLoyaut() {
   return (
     <>
       <StyledNav>
-        <StyledLink to="/">Home</StyledLink>
         {!isLogged && (
           <>
+            <StyledLink to="/">Home</StyledLink>
             <StyledLink to="/register">Register</StyledLink>
             <StyledLink to="/login">Login</StyledLink>
           </>

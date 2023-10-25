@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 const StyledList = styled.ol({
   width: 500,
+  padding: 0,
   marginLeft: 'auto',
   marginRight: 'auto',
   fontSize: 20,
@@ -62,7 +63,6 @@ export default function ContactList() {
   }, [dispatch]);
 
   return (
-    
     <StyledList>
       {filtered.length > 0 &&
         filtered.map(contact => {

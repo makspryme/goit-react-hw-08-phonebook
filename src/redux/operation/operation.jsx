@@ -82,7 +82,6 @@ export const fetchUserToken = createAsyncThunk(
 
     try {
       const { data } = await axios.get(`/users/current`);
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error);

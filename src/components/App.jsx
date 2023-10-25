@@ -19,7 +19,6 @@ export default function App() {
   const isLogged = useSelector(state => state.auth.isLoggedIn);
   const isLoading = useSelector(state => state.auth.isLoading);
 
-  console.log(isLoading);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -59,8 +58,11 @@ export default function App() {
           ) : (
             <>
               <Route index element={<Home />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" index element={<Login />} />
+              <>
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" index element={<Login />} />
+              </>
+
               {isLogged && <Route path="/contacts" element={<Contact />} />}
               <Route path="*" element={<Navigate to="/login" />} />
             </>

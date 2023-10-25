@@ -32,13 +32,11 @@ export const userReducer = createSlice({
         state.isLoggedIn = true;
       })
       .addCase(authLogin.fulfilled, (state, { payload }) => {
-        console.log(payload.data);
         state.user = payload.user;
         state.token = payload.token;
         state.isLoggedIn = true;
       })
       .addCase(authLogOut.fulfilled, state => {
-        console.log(555);
         state.user.name = '';
         state.user.email = '';
         state.user.password = '';
