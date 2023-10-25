@@ -1,6 +1,55 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { add } from 'redux/store';
+import { addContacts, getContacts } from 'redux/operation/operation';
+import styled from 'styled-components';
+
+const StyledDivForm = styled.div({
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  marginTop: 100,
+  width: 'max-content',
+  padding: 30,
+  backgroundColor: '#e6e6e6',
+  border: '2px solid black',
+  borderRadius: 15,
+});
+
+const StyledForm = styled.form({
+  backgroundColor: '#e6e6e6',
+});
+
+const StyledLabel = styled.label({
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+  marginBottom: 20,
+  width: 300,
+  fontSize: 18,
+});
+
+const StyledInput = styled.input({
+  marginTop: 5,
+  padding: 3,
+  fontSize: 16,
+  borderRadius: 5,
+});
+
+const StyledButton = styled.button({
+  display: 'block',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  padding: 10,
+  fontSize: 18,
+  borderRadius: 5,
+
+  '&:hover': {
+    backgroundColor: 'orange',
+    cursor: 'pointer',
+  },
+  '&:active': {
+    backgroundColor: '#eecc90',
+  },
+});
 
 export default function ContactForm() {
   const [name, setName] = useState('');
@@ -40,7 +89,10 @@ export default function ContactForm() {
       }
     }
 
-    dispatch(add(newContact));
+    dispatch(addContacts(newContact));
+    setTimeout(() => {
+      dispatch(getContacts());
+    }, 150);
   }
 
   function reset() {
@@ -49,11 +101,11 @@ export default function ContactForm() {
   }
 
   return (
-    <div>
-      <form className="form-contact" onSubmit={e => handleSubmitForm(e)}>
-        <label className="label-contact">
+    <StyledDivForm>
+      <StyledForm className="form-contact" onSubmit={e => handleSubmitForm(e)}>
+        <StyledLabel className="label-contact">
           Name
-          <input
+          <StyledInput
             type="text"
             name="name"
             pattern="^[a-zA-Za-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -61,10 +113,10 @@ export default function ContactForm() {
             onChange={handleInputChange}
             required
           />
-        </label>
-        <label className="label-contact">
+        </StyledLabel>
+        <StyledLabel className="label-contact">
           Number
-          <input
+          <StyledInput
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"
@@ -72,11 +124,11 @@ export default function ContactForm() {
             onChange={handleInputChange}
             required
           />
-        </label>
-        <button className="btn-submit" type="submit">
+        </StyledLabel>
+        <StyledButton className="btn-submit" type="submit">
           Add Contact
-        </button>
-      </form>
-    </div>
+        </StyledButton>
+      </StyledForm>
+    </StyledDivForm>
   );
 }

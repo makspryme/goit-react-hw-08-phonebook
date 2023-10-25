@@ -1,5 +1,39 @@
-import { remove } from 'redux/store';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { deleteContacts, getContacts } from 'redux/operation/operation';
+import styled from 'styled-components';
+
+const StyledList = styled.ol({
+  width: 500,
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  fontSize: 20,
+});
+
+const StyledItem = styled.li({
+  display: 'flex',
+  justifyContent: 'flex-end',
+  padding: 5,
+  marginBottom: 15,
+  border: '2px solid black',
+  borderRadius: 5,
+});
+
+const StyledButton = styled.button({
+  display: 'block',
+  marginLeft: 'auto',
+  padding: 5,
+  fontSize: 18,
+  borderRadius: 5,
+
+  '&:hover': {
+    backgroundColor: 'orange',
+    cursor: 'pointer',
+  },
+  '&:active': {
+    backgroundColor: '#eecc90',
+  },
+});
 
 export default function ContactList() {
   const valueContacts = useSelector(store => store.contacts);
@@ -9,28 +43,38 @@ export default function ContactList() {
   const filtered =
     valueContacts.length > 0
       ? valueContacts.filter(contact => {
-          return contact.name.toLowerCase().includes(filterValue.toLowerCase());
+          return contact?.name
+            .toLowerCase()
+            .includes(filterValue.toLowerCase());
         })
       : '';
 
+  const handleDeleteContacts = e => {
+    dispatch(deleteContacts(e.target.parentElement.id));
+
+    setTimeout(() => {
+      dispatch(getContacts());
+    }, 150);
+  };
+
+  useEffect(() => {
+    dispatch(getContacts());
+  }, [dispatch]);
+
   return (
-    <ul>
+    
+    <StyledList>
       {filtered.length > 0 &&
         filtered.map(contact => {
           return (
-            <li key={contact.id} id={contact.id}>
+            <StyledItem key={contact.id} id={contact.id}>
               {`${contact.name} - ${contact.number}`}
-              <button
-                type="text"
-                onClick={e => {
-                  dispatch(remove(e.target.parentElement.id));
-                }}
-              >
+              <StyledButton type="text" onClick={handleDeleteContacts}>
                 delete
-              </button>
-            </li>
+              </StyledButton>
+            </StyledItem>
           );
         })}
-    </ul>
+    </StyledList>
   );
 }
